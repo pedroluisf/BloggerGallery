@@ -1,0 +1,107 @@
+<!doctype html>
+<html>
+    <head>
+        <title>Blogger Gallery Helper</title>
+        <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+        <style>
+            h3 {
+                text-align: center;
+                width: 100%;
+            }
+            textarea {
+                height: 40%;
+                padding: 10px;
+                margin: 20px;
+                overflow-y: auto;
+            }
+            .textarea_container {
+                height: 400px;
+                text-align: center;
+            }
+            .width-80 {
+                width: 80%;
+            }
+            .center-div {
+                margin: 0 auto;
+            }
+            #success-alert {
+                position: absolute;
+                width: 400px;
+                display: none;
+                top: 20px;
+                right: 5%;
+            }
+        </style>
+    </head>
+    <body>
+        <div class="container">
+            <div class="row width-80 center-div">
+                <h1 class="text-center">Blogger Gallery Helper</h1>
+                <p>This helper tool will create a responsive gallery code for a set of links / images provided for your blog. It is based on the original post from <a target="_blank" href="https://georgialoustudios.com/how-to-create-a-responsive-blogger-image-gallery/">GEORGIA LOU STUDIOS</a>. To use it, just follow these steps:</p>
+                <ol>
+                    <li>Start / Edit a blog page</li>
+                    <li>Upload your images</li>
+                    <li>Enter HTML view</li>
+                    <li>Cut the generated HTML text for the uploaded images</li>
+                    <li>Paste it on the provided input area</li>
+                    <li>Click "Convert"</li>
+                    <li>Paste the result of the output into your blog</li>
+                    <li>Change the Title and Alt text for each image (tip: go back to Compose View and again HTML view to display pretty HTML)</li>
+                </ol>
+                <p>You will also be required to add a set of styles to your page. You can get those styles <a target="_blank" href="galleryStyle.css">here</a>.
+                    <ul>
+                    <li>Either add these styles on the page/post at the beginning of the page (in a style tag) or...</li>
+                        <li>If you are using several pages, add it to the blog settings on "<em>Themes\Advanced|Add CSS</em>" (If you are using mobile theme, make sure to select the custom theme to have the css styles propagated to the mobile theme).</li>
+                    </ul>
+                </p>
+            </div>
+            <div class="row text-center">
+                <div class="textarea_container">
+                    <textarea id="input"class="width-80" placeholder="Insert images html here"></textarea>
+                    <textarea id="output" class="width-80" placeholder="final gallery code will be dsplayed here" disabled="disabled"></textarea>
+                </div>
+            </div>
+            <div class="row text-center">
+                <button type="button" id="convertBtn" class="btn btn-primary" onclick="convert()">Convert</button>
+                <button type="button" id="copyBtn" class="btn btn-primary" disabled="disabled" onclick="copyToClipboard($('#output').val()); $('#copiedSuccess').show()">Copy to Clipboard</button>
+                <div id="success-alert" class="alert alert-success">
+                    <strong>Success!</strong> The HTML code was copied to your clipboard.
+                </div>
+            </div>
+        </div>
+
+        <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+        <script src="HtmlParser.js"></script>
+        <script type="text/javascript">
+            var convert = function() {
+                var result = HP('#input').convert();
+                $('#output').val(result);
+                $('#copyBtn').attr('disabled', !result);
+            };
+
+            var copyToClipboard = (function() {
+                var _dataString = null;
+                document.addEventListener("copy", function(e){
+                    if (_dataString !== null) {
+                        try {
+                            e.clipboardData.setData("text/plain", _dataString);
+                            e.preventDefault();
+
+                            //Show message and hide it again
+                            $("#success-alert").fadeTo(2000, 500).slideUp(500, function(){
+                                $("#success-alert").slideUp(500);
+                            });
+
+                        } finally {
+                            _dataString = null;
+                        }
+                    }
+                });
+                return function(data) {
+                    _dataString = data;
+                    document.execCommand("copy");
+                };
+            })();
+        </script>
+    </body>
+</html>
