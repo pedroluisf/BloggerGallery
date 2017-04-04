@@ -62,6 +62,14 @@
                 </div>
             </div>
             <div class="row text-center">
+                <label class="checkbox-inline">
+                    <input type="checkbox" id="createAlt" checked="checked">Create Alt Tag placeholder
+                </label>
+                <label class="checkbox-inline">
+                    <input type="checkbox" id="createTitle" checked="checked">Create Title placeholder
+                </label>
+            </div>
+            <div class="row text-center h3">
                 <button type="button" id="convertBtn" class="btn btn-primary" onclick="convert()">Convert</button>
                 <button type="button" id="copyBtn" class="btn btn-primary" disabled="disabled" onclick="copyToClipboard($('#output').val()); $('#copiedSuccess').show()">Copy to Clipboard</button>
                 <div id="success-alert" class="alert alert-success">
@@ -74,7 +82,7 @@
         <script src="HtmlParser.js"></script>
         <script type="text/javascript">
             var convert = function() {
-                var result = HP('#input').convert();
+                var result = HP('#input').convert($('#createAlt').is(':checked'), $('#createTitle').is(':checked'));
                 $('#output').val(result);
                 $('#copyBtn').attr('disabled', !result);
             };

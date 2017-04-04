@@ -9,16 +9,30 @@
     // prototype holds methods (to save memory space)
     HtmlParser.prototype = {
 
-        convert: function() {
+        convert: function(createAltTag, createTitle) {
             this.initHtml();
 
             var object = $('<div>').html("<div>" + this.$element.val() + "<div>").contents();
             var found = false;
             object.find("a").each(function(e) {
                 found = true;
-                var $img = $("<img>", {"src": $(this).find('img').attr("src"), "alt": "YOUR_ALT_TEXT_HERE" });
-                var $a =  $("<a>", {"class": "item-link", "href": $(this).attr("href")}).append($img);
-                var $li = $("<li>", {"class": "gallery-item"}).append($a).append($('<h3>', {"text" : "YOUR_TITLE_HERE"}));
+                var imgAttrs,
+                    $img,
+                    $a,
+                    $li;
+
+                imgAttrs = {"src": $(this).find('img').attr("src")};
+                if (createAltTag) {
+                    imgAttrs.alt = "YOUR_ALT_TEXT_HERE";
+                }
+                $img = $("<img>", imgAttrs);
+
+                $a =  $("<a>", {"class": "item-link", "href": $(this).attr("href")}).append($img);
+
+                $li = $("<li>", {"class": "gallery-item"}).append($a);
+                if (createTitle) {
+                    $li.append($('<h3>', {"text" : "YOUR_TITLE_HERE"}));
+                }
 
                 $finalHtml.find("ul").append($li);
             });
