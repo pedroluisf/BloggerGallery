@@ -25,6 +25,7 @@
                 margin: 0 auto;
             }
             #success-alert {
+                font-size: large;
                 position: absolute;
                 width: 400px;
                 display: none;
@@ -73,7 +74,7 @@
                 <button type="button" id="convertBtn" class="btn btn-primary" onclick="convert()">Convert</button>
                 <button type="button" id="copyBtn" class="btn btn-primary" disabled="disabled" onclick="copyToClipboard($('#output').val()); $('#copiedSuccess').show()">Copy to Clipboard</button>
                 <div id="success-alert" class="alert alert-success">
-                    <strong>Success!</strong> The HTML code was copied to your clipboard.
+                    <strong>Success!</strong><br/>The HTML code was copied to your clipboard.
                 </div>
             </div>
         </div>
