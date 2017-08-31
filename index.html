@@ -8,6 +8,9 @@
                 text-align: center;
                 width: 100%;
             }
+            body {
+                font-size: small;
+            }
             textarea {
                 height: 40%;
                 padding: 10px;
@@ -23,6 +26,9 @@
             }
             .center-div {
                 margin: 0 auto;
+            }
+            .adds {
+                text-align: center;
             }
             #success-alert {
                 font-size: large;
@@ -69,6 +75,9 @@
                 <label class="checkbox-inline">
                     <input type="checkbox" id="createTitle" checked="checked">Create Title placeholder
                 </label>
+                <label class="checkbox-inline">
+                    <input type="checkbox" id="createLink" checked="checked">Make Clickable
+                </label>
             </div>
             <div class="row text-center h3">
                 <button type="button" id="convertBtn" class="btn btn-primary" onclick="convert()">Convert</button>
@@ -80,10 +89,10 @@
         </div>
 
         <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
-        <script src="HtmlParser.js"></script>
+        <script src="HtmlParser.js?v=2"></script>
         <script type="text/javascript">
             var convert = function() {
-                var result = HP('#input').convert($('#createAlt').is(':checked'), $('#createTitle').is(':checked'));
+                var result = HP('#input').convert($('#createAlt').is(':checked'), $('#createTitle').is(':checked'), $('#createLink').is(':checked'));
                 $('#output').val(result);
                 $('#copyBtn').attr('disabled', !result);
             };

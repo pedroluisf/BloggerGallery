@@ -9,7 +9,7 @@
     // prototype holds methods (to save memory space)
     HtmlParser.prototype = {
 
-        convert: function(createAltTag, createTitle) {
+        convert: function(createAltTag, createTitle, createLink) {
             this.initHtml();
 
             var object = $('<div>').html("<div>" + this.$element.val() + "<div>").contents();
@@ -27,9 +27,13 @@
                 }
                 $img = $("<img>", imgAttrs);
 
-                $a =  $("<a>", {"class": "item-link", "href": $(this).attr("href")}).append($img);
+                if (createLink) {
+                    $a =  $("<a>", {"class": "item-link", "href": $(this).attr("href")}).append($img);
+                    $li = $("<li>", {"class": "gallery-item"}).append($a);
+                } else {
+                    $li = $("<li>", {"class": "gallery-item"}).append($img);
+                }
 
-                $li = $("<li>", {"class": "gallery-item"}).append($a);
                 if (createTitle) {
                     $li.append($('<h3>', {"text" : "YOUR_TITLE_HERE"}));
                 }
